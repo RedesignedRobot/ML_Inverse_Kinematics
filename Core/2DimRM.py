@@ -97,53 +97,53 @@ dh_data_y = pd.DataFrame(data=y_data_cols)
 grand_set = pd.DataFrame(data=data_total)
 
 grand_set.to_csv("grand_set",sep=',')
-# dh_data_x.to_csv("dh_data_x",sep='\t',index=False,index_label=False)
-# dh_data_y.to_csv("dh_data_y",sep='\t',index_label=False,index=False)
-#
-# #Spliting & Preprocessing Data
-#
-# X_train, X_test, y_train, y_test = tts(dh_data_x, dh_data_y, test_size=0.33, random_state=101)
-# scaler = mms()
-# scaler.fit(X_train)
-#
-# X_train_scaled = pd.DataFrame(data=scaler.transform(X_train),
-#                        columns=X_train.columns,
-#                        index=X_train.index)
-#
-# X_test_scaled = pd.DataFrame(data=scaler.transform(X_test),
-#                        columns=X_test.columns,
-#                        index=X_test.index)
-#
-#
-# #Creating feature columns
-#
-# feature_cols = [tf.feature_column.numeric_column('Inverse_X'),
-#                 tf.feature_column.numeric_column('Inverse_Y')]
-#
-# print(feature_cols)
-#
-# #Building DNN Regressor
-#
-# input_func = tf.estimator.inputs.pandas_input_fn(x=X_train_scaled,
-#                                                  y=y_train,
-#                                                  batch_size=20,
-#                                                  num_epochs=100000,
-#                                                  shuffle=True)
-#
-# model = tf.estimator.DNNRegressor(hidden_units=[10,10,10],feature_columns=feature_cols)
-#
-# model.train(input_fn=input_func,steps=30000)
-# #Loss for final step: 0.0008938401
-#
-# #Testing the model
-#
-# predict_input_func = tf.estimator.inputs.pandas_input_fn(x=X_test_scaled,
-#                                                          num_epochs=1,
-#                                                          shuffle=False)
-#
-# predictions_gen = model.predict(predict_input_func)
-#
-# print(predictions_gen[0])
+dh_data_x.to_csv("dh_data_x",sep='\t',index=False,index_label=False)
+dh_data_y.to_csv("dh_data_y",sep='\t',index_label=False,index=False)
 
-# for p in enumerate(predictions_gen):
-#     print(p)
+#Spliting & Preprocessing Data
+
+X_train, X_test, y_train, y_test = tts(dh_data_x, dh_data_y, test_size=0.33, random_state=101)
+scaler = mms()
+scaler.fit(X_train)
+
+X_train_scaled = pd.DataFrame(data=scaler.transform(X_train),
+                        columns=X_train.columns,
+                        index=X_train.index)
+
+X_test_scaled = pd.DataFrame(data=scaler.transform(X_test),
+                        columns=X_test.columns,
+                        index=X_test.index)
+
+
+#Creating feature columns
+
+feature_cols = [tf.feature_column.numeric_column('Inverse_X'),
+                tf.feature_column.numeric_column('Inverse_Y')]
+
+print(feature_cols)
+
+#Building DNN Regressor
+
+input_func = tf.estimator.inputs.pandas_input_fn(x=X_train_scaled,
+                                                y=y_train,
+                                                batch_size=20,
+                                                num_epochs=100000,
+                                                shuffle=True)
+
+model = tf.estimator.DNNRegressor(hidden_units=[10,10,10],feature_columns=feature_cols)
+
+model.train(input_fn=input_func,steps=30000)
+#Loss for final step: 0.0008938401
+
+#Testing the model
+
+predict_input_func = tf.estimator.inputs.pandas_input_fn(x=X_test_scaled,
+                                                          num_epochs=1,
+                                                          shuffle=False)
+
+predictions_gen = model.predict(predict_input_func)
+
+print(predictions_gen[0])
+
+for p in enumerate(predictions_gen):
+    print(p)
